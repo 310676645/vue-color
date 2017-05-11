@@ -1,8 +1,7 @@
 <template>
   <div class="vue-color__saturation"
     :style="{background: bgColor}"
-    ref="container"
-    @mousedown="handleMouseDown">
+    ref="container">
     <div class="vue-color__saturation--white"></div>
     <div class="vue-color__saturation--black"></div>
     <div class="vue-color__saturation--pointer" :style="{top: pointerTop, left: pointerLeft}">
@@ -80,18 +79,21 @@ export default {
     },
     handleMouseDown (e) {
       // this.handleChange(e, true)
-      window.addEventListener('mousemove', this.handleChange)
-      window.addEventListener('mouseup', this.handleChange)
-      window.addEventListener('mouseup', this.handleMouseUp)
+      window.addEventListener('touchmove', this.handleChange)
+      window.addEventListener('touchmove', this.handleChange)
+      window.addEventListener('touchend', this.handleMouseUp)
     },
     handleMouseUp (e) {
       this.unbindEventListeners()
     },
     unbindEventListeners () {
-      window.removeEventListener('mousemove', this.handleChange)
-      window.removeEventListener('mouseup', this.handleChange)
-      window.removeEventListener('mouseup', this.handleMouseUp)
+      window.removeEventListener('touchmove', this.handleChange)
+      window.removeEventListener('touchmove', this.handleChange)
+      window.removeEventListener('touchend', this.handleMouseUp)
     }
+  },
+  mounted () {
+    this.$refs.container.addEventListener('touchstart', this.handleMouseDown)
   }
 }
 </script>
